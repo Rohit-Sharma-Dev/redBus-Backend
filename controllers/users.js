@@ -106,9 +106,6 @@ module.exports.userbyId=async(req, res)=>{
         res.status(500).send("server error")
     }
 }
-
-
-
 // admin login
 
 module.exports.adminlogin =async(req, res)=>{
