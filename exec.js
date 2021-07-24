@@ -8,7 +8,7 @@ function exec(cmd, options) {
         output = options.trim ? output.trim() : output;
     }
 
-    return output;
+    return output
 }
 
 exports.exec = exec;

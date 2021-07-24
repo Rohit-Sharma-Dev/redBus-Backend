@@ -1,24 +1,67 @@
-const mongoose = require('mongoose');
-const Bus= new mongoose.Schema({
-Agency_name : type(String),
+const mongoose=require('mongoose')
 
-vehicle_no : type(String),
+const Bus = new mongoose.Schema({
+    busName: {
+        type: String,
+        required:true
+    },
+    agency:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'agencies'
+    },
+vehicleNo: {
+    type: String,
+    unique: true,
+    required: true
+},
+seats: [[{
+    type: String,
+}]],
+busType: {
+    type: String,
+    enum:['Ac', 'NonAc'],
+    default : 'Ac',
+},
+seatCategory:{
+    type: String,
+    enum : ['sleeper', 'semi sleeper'],
+    default : 'sleeper',
+    required:true
+},
+driver:{
+    type:mongoose.Schema.Types.ObjectId,
+    ref:'staff'
+    },
+helper:{
+    type:mongoose.Schema.Types.ObjectId,
+    ref:'staffs'
+    },
+policy: {
+    type: String,
+    required:true
+},
+images:{ data: Buffer, contentType: String },
+from:{ // index
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'locations',
+        index:true,
+},
+to:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'locations',
+        index : true
+   },
+arrivalTime: {
+    type: String,
+    required: true
+},
+departureTime: {
+    type: String,
+    required: true
+}
 
-seats : type(Array),
-
-type : type(String),
-
-seat_category : type(String),
-
-bus_staff : [{name: type(String), role:type(String)}],
-
-policy : type(String),
-
-images:type(array),
-
-emergency_no : type(Number),
-
-location:[ ],
-
-date: type(Date)
+},{ 
+timestamps: true
 })
+const bus = mongoose.model('Buses', Bus)
+module.exports = bus
